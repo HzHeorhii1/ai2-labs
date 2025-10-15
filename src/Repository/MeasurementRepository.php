@@ -21,11 +21,10 @@ class MeasurementRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->where('m.location = :location')
-            ->andWhere('m.date >= :today')
             ->setParameter('location', $location)
-            ->setParameter('today', (new \DateTime())->format('Y-m-d'))
-            ->orderBy('m.date', 'ASC')
+            ->orderBy('m.date', 'DESC')
             ->getQuery()
             ->getResult();
     }
+
 }
