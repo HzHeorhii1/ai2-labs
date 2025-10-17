@@ -1,0 +1,39 @@
+# config/validator/validation.yaml
+
+App\Entity\Location:
+    properties:
+        city:
+            - NotBlank: { groups: ['new', 'edit'] }
+        country:
+            - NotBlank: { groups: ['new', 'edit'] }
+            - Choice:
+                  choices: ['PL', 'DE', 'FR', 'ES', 'IT', 'GB', 'US']
+                  groups: ['new', 'edit']
+        latitude:
+            - NotBlank: { groups: ['new', 'edit'] }
+            - Range:
+                  min: -90
+                  max: 90
+                  groups: ['new', 'edit']
+        longitude:
+            - NotBlank: { groups: ['new', 'edit'] }
+            - Range:
+                  min: -180
+                  max: 180
+                  groups: ['new', 'edit']
+
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotNull: { groups: ['new', 'edit'] }
+        date:
+            - NotBlank: { groups: ['new', 'edit'] }
+            - Type:
+                  type: \DateTimeInterface
+                  groups: ['new', 'edit']
+        celsius:
+            - NotBlank: { groups: ['new', 'edit'] }
+            - Range:
+                  min: -100
+                  max: 100
+                  groups: ['new', 'edit']
