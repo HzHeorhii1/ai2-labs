@@ -37,5 +37,19 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_location_new') }}">Create new</a>
+    {% if is_granted('ROLE_LOCATION_INDEX') %}
+        <a href="{{ path('app_location_index') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_LOCATION_NEW') %}
+        <a href="{{ path('app_location_new') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_LOCATION_SHOW') %}
+        <a href="{{ path('app_location_show') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_LOCATION_EDIT') %}
+        <a href="{{ path('app_location_edit') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_LOCATION_DELETE') %}
+        <a href="{{ path('app_location_delete') }}">Create new</a>
+    {% endif %}
 {% endblock %}

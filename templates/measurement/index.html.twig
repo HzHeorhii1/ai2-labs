@@ -33,5 +33,19 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_measurement_new') }}">Create new</a>
+    {% if is_granted('ROLE_MEASUREMENTS_INDEX') %}
+        <a href="{{ path('app_measurement_index') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_MEASUREMENTS_NEW') %}
+        <a href="{{ path('app_measurement_new') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_MEASUREMENTS_EDIT') %}
+        <a href="{{ path('app_measurement_edit') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_MEASUREMENTS_DELETE') %}
+        <a href="{{ path('app_measurement_delete') }}">Create new</a>
+    {% endif %}
+    {% if is_granted('ROLE_MEASUREMENTS_SHOW') %}
+        <a href="{{ path('app_measurement_show') }}">Create new</a>
+    {% endif %}
 {% endblock %}
