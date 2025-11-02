@@ -13,7 +13,7 @@
                 <th>Country</th>
                 <th>Latitude</th>
                 <th>Longitude</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,31 +25,42 @@
                 <td>{{ location.latitude }}</td>
                 <td>{{ location.longitude }}</td>
                 <td>
-                    <a href="{{ path('app_location_show', {'id': location.id}) }}">show</a>
-                    <a href="{{ path('app_location_edit', {'id': location.id}) }}">edit</a>
+                    {% if is_granted('ROLE_LOCATION_SHOW') %}
+                        <a href="{{ path('app_location_show', {'id': location.id}) }}">show</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_LOCATION_EDIT') %}
+                        <a href="{{ path('app_location_edit', {'id': location.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    {% if is_granted('ROLE_LOCATION_INDEX') %}
-        <a href="{{ path('app_location_index') }}">Create new</a>
-    {% endif %}
-    {% if is_granted('ROLE_LOCATION_NEW') %}
-        <a href="{{ path('app_location_new') }}">Create new</a>
-    {% endif %}
-    {% if is_granted('ROLE_LOCATION_SHOW') %}
-        <a href="{{ path('app_location_show') }}">Create new</a>
-    {% endif %}
-    {% if is_granted('ROLE_LOCATION_EDIT') %}
-        <a href="{{ path('app_location_edit') }}">Create new</a>
-    {% endif %}
-    {% if is_granted('ROLE_LOCATION_DELETE') %}
-        <a href="{{ path('app_location_delete') }}">Create new</a>
-    {% endif %}
+    {# --- WERYFIKACJA RÓL PO TABELI --- #}
+    <div class="mt-3">
+        {% if is_granted('ROLE_LOCATION_INDEX') %}
+            <a href="{{ path('app_location_index') }}" class="btn btn-secondary">Back to list</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_LOCATION_NEW') %}
+            <a href="{{ path('app_location_new') }}" class="btn btn-primary">Create new</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_LOCATION_SHOW') %}
+            <a href="#" class="btn btn-info disabled">Show</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_LOCATION_EDIT') %}
+            <a href="#" class="btn btn-warning disabled">Edit</a>
+        {% endif %}
+
+        {% if is_granted('ROLE_LOCATION_DELETE') %}
+            <a href="#" class="btn btn-danger disabled">Delete</a>
+        {% endif %}
+    </div>
 {% endblock %}

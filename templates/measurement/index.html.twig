@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Date</th>
                 <th>Celsius</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +21,12 @@
                 <td>{{ measurement.date ? measurement.date|date('Y-m-d') : '' }}</td>
                 <td>{{ measurement.celsius }}</td>
                 <td>
-                    <a href="{{ path('app_measurement_show', {'id': measurement.id}) }}">show</a>
-                    <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}">edit</a>
+                    {% if is_granted('ROLE_MEASUREMENTS_SHOW') %}
+                        <a href="{{ path('app_measurement_show', {'id': measurement.id}) }}">show</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_MEASUREMENTS_EDIT') %}
+                        <a href="{{ path('app_measurement_edit', {'id': measurement.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -34,18 +38,22 @@
     </table>
 
     {% if is_granted('ROLE_MEASUREMENTS_INDEX') %}
-        <a href="{{ path('app_measurement_index') }}">Create new</a>
+        <a href="{{ path('app_measurement_index') }}">back to list</a>
     {% endif %}
+
     {% if is_granted('ROLE_MEASUREMENTS_NEW') %}
-        <a href="{{ path('app_measurement_new') }}">Create new</a>
+        <a href="{{ path('app_measurement_new') }}">create new</a>
     {% endif %}
-    {% if is_granted('ROLE_MEASUREMENTS_EDIT') %}
-        <a href="{{ path('app_measurement_edit') }}">Create new</a>
+
+    {% if is_granted('ROLE_MEASUREMENTS_SHOW') and measurements|length > 0 %}
+        <a href="{{ path('app_measurement_show', {'id': measurements|first.id}) }}">show (first)</a>
     {% endif %}
-    {% if is_granted('ROLE_MEASUREMENTS_DELETE') %}
-        <a href="{{ path('app_measurement_delete') }}">Create new</a>
+
+    {% if is_granted('ROLE_MEASUREMENTS_EDIT') and measurements|length > 0 %}
+        <a href="{{ path('app_measurement_edit', {'id': measurements|first.id}) }}">edit (first)</a>
     {% endif %}
-    {% if is_granted('ROLE_MEASUREMENTS_SHOW') %}
-        <a href="{{ path('app_measurement_show') }}">Create new</a>
+
+    {% if is_granted('ROLE_MEASUREMENTS_DELETE') and measurements|length > 0 %}
+        <a href="{{ path('app_measurement_delete', {'id': measurements|first.id}) }}">delete (first)</a>
     {% endif %}
 {% endblock %}
